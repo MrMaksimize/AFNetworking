@@ -456,11 +456,11 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 - (BOOL)connection:(NSURLConnection *)connection 
 canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
 {
-#ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
+  //#ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
     if ([protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
         return YES;
     }
-#endif
+  //#endif
     
     if (self.authenticationAgainstProtectionSpace) {
         return self.authenticationAgainstProtectionSpace(connection, protectionSpace);
@@ -474,12 +474,12 @@ canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace
 - (void)connection:(NSURLConnection *)connection 
 didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge 
 {
-#ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
+  //#ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
     if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
         [challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
         return;
     }
-#endif
+  //#endif
     
     if (self.authenticationChallenge) {
         self.authenticationChallenge(connection, challenge);
